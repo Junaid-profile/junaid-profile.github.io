@@ -1,0 +1,80 @@
+tml<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>junaid,s history</title>
+    <style>
+        body { font-family: sans-serif; margin: 0; padding: 20px; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 90vh; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
+        h1 { color: #007bff; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { width: 95%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #0056b3; }
+        #error-msg { color: red; margin-top: 10px; display: none; }
+        #web-content { display: none; width: 100%; max-width: 600px; text-align: left; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        img { width: 100%; max-width: 300px; border-radius: 8px; margin: 15px 0; display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. LOGIN SCREEN -->
+    <div class="card" id="login-box">
+        <h2>🔒 Login Required</h2>
+        <p>junaid,s history dekhnay k liye login karein</p>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="checkLogin()">Login</button>
+        <p id="error-msg">Galat Username ya Password!</p>
+    </div>
+
+    <!-- 2. WEBSITE MAIN DATA -->
+    <div class="card" id="web-content">
+        <h1>Welcome to junaid,s history</h1>
+        <p>Hello! Mera naam <b>Junaid</b> hai aur main aik student hoon.</p>
+        
+        <!-- Yahan aap apni picture lagayen gy -->
+        <h3>🖼️ Meri Picture</h3>
+        <img src="my-photo.jpg" alt="Apni pic ka naam yahan likhein agar image show na ho">
+
+        <h3>📚 Mera Data</h3>
+        <ul>
+            <li><b>Class:</b> [Apni class yahan likhein]</li>
+            <li><b>School/College:</b> [Apne idaray ka naam likhein]</li>
+            <li><b>Hobby:</b> History seekhna aur parhna</li>
+        </ul>
+
+        <!-- Future mein tabdili ke liye naya section -->
+        <h3>📜 History / New Heading</h3>
+        <p>Yahan aap jo bhi naya data ya history likhna chahein, likh sakty hain.</p>
+        
+        <button onclick="logout()" style="background: #dc3545; margin-top: 20px;">Logout</button>
+    </div>
+
+    <!-- 3. LOGIN JAVASCRIPT -->
+    <script>
+        function checkLogin() {
+            var u = document.getElementById("username").value;
+            var p = document.getElementById("password").value;
+            
+            if (u === "junaid" && p === "25362536") {
+                document.getElementById("login-box").style.display = "none";
+                document.getElementById("web-content").style.display = "block";
+            } else {
+                document.getElementById("error-msg").style.display = "block";
+            }
+        }
+
+        function logout() {
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("login-box").style.display = "block";
+            document.getElementById("web-content").style.display = "none";
+            document.getElementById("error-msg").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
