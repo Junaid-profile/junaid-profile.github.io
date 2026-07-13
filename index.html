@@ -3,125 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Junaid's Profile</title>
+    <title>Junaid's Portfolio & Result Card</title>
+    <!-- Google Fonts for Modern Look -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            background: linear-gradient(135deg, #e0eafc, #cfdef3); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 90vh; 
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .card { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-            width: 100%; 
-            max-width: 500px; 
-            text-align: center; 
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
         }
-        h1 { color: #1e3c72; margin-bottom: 5px; font-size: 28px; }
-        h2 { color: #2a5298; margin-top: 0; }
-        h3 { color: #1e3c72; border-bottom: 2px solid #2a5298; padding-bottom: 5px; margin-top: 25px; }
-        p { color: #555; font-size: 15px; line-height: 1.6; }
-        input { 
-            width: 90%; 
-            padding: 12px; 
-            margin: 12px 0; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            font-size: 15px;
-            outline: none;
+
+        /* 🌙 Dark/Grey Mode Variables Override */
+        body.dark-mode {
+            background-color: #2b2d42;
+            color: #edf2f4;
         }
-        input:focus { border-color: #2a5298; }
-        button { 
-            width: 95%; 
-            padding: 12px; 
-            background: linear-gradient(to right, #1e3c72, #2a5298); 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            font-weight: bold;
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
         }
-        #error-msg { color: #d9534f; margin-top: 10px; display: none; font-weight: bold; }
-        #web-content { display: none; width: 100%; max-width: 550px; text-align: left; }
-        ul { padding-left: 20px; list-style-type: none; }
-        li { margin-bottom: 12px; color: #444; font-size: 15px; }
-        img { 
-            width: 100%; 
-            max-width: 220px; 
-            border-radius: 50%; 
-            height: 220px;
-            object-fit: cover;
-            margin: 20px auto; 
-            display: block; 
-            border: 4px solid #2a5298;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+
+        /* Dark Mode Button Styling */
+        .theme-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            color: #1e3c72;
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background: #1e3c72;
+            color: #ffffff;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: #00d2ff;
+        }
+
+        /* Main Content & Cards */
+        main {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .card {
+            background: #3d405b;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+        }
+
+        body.dark-mode .card h2 {
+            color: #00d2ff;
+            border-bottom: 2px solid #4a4e69;
+        }
+
+        /* Info List styling */
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        body.dark-mode .info-list li {
+            border-bottom: 1px solid #4a4e69;
+        }
+
+        /* Result Table Styling */
+        .result-container {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .result-table th, .result-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        body.dark-mode .result-table td {
+            border-bottom: 1px solid #4a4e69;
+        }
+
+        .result-table th {
+            background-color: #1e3c72;
+            color: white;
+            font-weight: 600;
+        }
+
+        body.dark-mode .result-table th {
+            background-color: #1e3c72;
+        }
+
+        .result-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        body.dark-mode .result-table tbody tr:hover {
+            background-color: #4a4e69;
+        }
+
+        .total-row {
+            background-color: #f4f7f6;
+            font-size: 1.1rem;
+            color: #1e3c72;
+        }
+
+        body.dark-mode .total-row {
+            background-color: #4a4e69;
+            color: #00d2ff;
+        }
+
+        /* Project Grid & Buttons */
+        .project-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e3c72;
+            margin-top: 15px;
+        }
+
+        body.dark-mode .project-card {
+            background: #4a4e69;
+            border-left: 4px solid #00d2ff;
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        body.dark-mode .project-card h3 {
+            color: #fff;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #1e3c72;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #00d2ff;
+            color: #1e3c72;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode footer {
+            color: #9a8c98;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOGIN SCREEN -->
-    <div class="card" id="login-box">
-        <h2>🔒 Login Required</h2>
-        <p>Please login to view Junaid's Profile</p>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="checkLogin()">Login</button>
-        <p id="error-msg">Incorrect Username or Password!</p>
-    </div>
-
-    <!-- 2. WEBSITE MAIN DATA -->
-    <div class="card" id="web-content">
-        <h1 style="text-align: center;">Welcome to Junaid's Profile</h1>
-        <p style="text-align: center;">Hello! My name is <b>Junaid</b> and I am a student.</p>
-        
-        <img src="junaid.png.jpg" alt="Junaid's Picture">
-
-        <h3>📚 My Education & Personal Info</h3>
-        <ul>
-            <li><b>Name:</b> Junaid</li>
-            <li><b>Father's Name:</b> Muhammad Afzal</li>
-            <li><b>Status:</b> Student</li>
-            <li><b>Class:</b> 12th Grade (Intermediate)</li>
-            <li><b>College:</b> Punjab College, Zafarwal</li>
-            <li><b>City:</b> Zafarwal, Pakistan</li>
-            <li><b>Hobbies:</b> Learning history and exploring new skills</li>
-        </ul>
-
-        <h3>📜 About Me / Details</h3>
-        <p>I am a student at Punjab College Zafarwal. I love studying history, managing my data, and learning how to build modern websites.</p>
-        
-        <button onclick="logout()" style="background: linear-gradient(to right, #cb2d3e, #ef473a); margin-top: 25px; width: 100%;">Logout</button>
-    </div>
-
-    <!-- 3. LOGIN JAVASCRIPT -->
-    <script>
-        function checkLogin() {
-            var u = document.getElementById("username").value;
-            var p = document.getElementById("password").value;
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <!-- 🌙 Toggle Button inside Header -->
+            <button class="theme-toggle-btn" onclick="toggleTheme()">🌙 Grey Mode</button>
             
-            if (u === "junaid" && p === "25362536") {
-                document.getElementById("login-box").style.display = "none";
-                document.getElementById("web-content").style.display = "block";
-            } else {
-                document.getElementById("error-msg").style.display = "block";
-            }
-        }
+            <h1>Junaid <span class="highlight">Afzal</span></h1>
+            <p>Intermediate Student & Aspiring Web Developer</p>
+        </div>
+    </header>
 
-        function logout() {
-            document.getElementById("username").value = "";
-            document.getElementById("password").value = "";
-            document.getElementById("login-box").style.display = "block";
-            document.getElementById("web-content").style.display = "none";
-            document.getElementById("error-msg").style.display = "none";
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- About Me Section -->
+        <section class="card">
+            <h2>📜 About Me</h2>
+            <p>I am a student at <strong>Punjab College, Zafarwal</strong>. I love studying history, managing data, and learning how to build modern, responsive websites.</p>
+        </section>
+
+        <!-- Education & Info Section -->
+        <section class="card">
+            <h2>📚 Education & Info</h2>
+            <ul class="info-list">
+                <li><strong>Status:</strong> 12th Grade (Intermediate)</li>
+                <li><strong>City:</strong> Zafarwal, Pakistan</li>
+                <li><strong>Hobbies:</strong> Learning history & exploring tech skills</li>
+            </ul>
+        </section>
+
+        <!-- Result Card Section -->
+        <section class="card">
+            <h2>📊 My Academic Results (11th Grade)</h2>
+            <div class="result-container">
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Total Marks</th>
+                            <th>Obtained Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>English</td>
+                            <td>100</td>
+                            <td>85</td>
+                        </tr>
+                        <tr>
+                            <td>Urdu</td>
+                            <td>100</td>
+                            <td>78</td>
+                        </tr>
+                        <tr>
+                            <td>Islamic Studies</td>
+                            <td>50</td>
+                            <td>45</td>
+                        </tr>
+                        <tr>
+                            <td>Physics</td>
+                            <td>85</td>
+                            <td>72</td>
+                        </tr>
+                        <tr>
+                            <td>Chemistry</td>
+                            <td>85</td>
+                            <td>68</td>
+                        </tr>
+                        <tr>
+                            <td>Mathematics</td>
+                            <td>85</td>
+                            <td>75</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Grand Total</strong></td>
+                            <td><strong>505</strong></td>
+                            <td><strong>423</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- My Projects Section -->
+        <section class="card">
+            <h2>💻 My Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>My First Profile Website</h3>
+                    <p>A clean personal portfolio built with HTML & CSS, hosted on GitHub Pages.</p>
+                    <a href="#" class="btn">View Live</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Junaid Afzal. Built with ♥ using HTML & CSS.</p>
+    </footer>
+
+    <!-- ⚡ JavaScript for Theme Toggle Functional -->
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.theme-toggle-btn');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                btn.innerHTML = "☀️ Light Mode";
+            } else {
+                btn.innerHTML = "🌙 Grey Mode";
+            }
         }
     </script>
 
