@@ -13,7 +13,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         body {
@@ -23,50 +22,32 @@
             line-height: 1.6;
         }
 
-        /* 🌙 Dark/Grey Mode Variables Override */
-        body.dark-mode {
-            background-color: #2b2d42;
-            color: #edf2f4;
-        }
-
         .container {
             width: 90%;
             max-width: 800px;
             margin: 0 auto;
-            position: relative;
-        }
-
-        /* Dark Mode Button Styling */
-        .theme-toggle-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #ffffff;
-            color: #1e3c72;
-            border: none;
-            padding: 8px 15px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        body.dark-mode .theme-toggle-btn {
-            background: #1e3c72;
-            color: #ffffff;
         }
 
         /* Header Styling */
         header {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: #fff;
-            padding: 60px 0;
+            padding: 50px 0;
             text-align: center;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            position: relative;
+        }
+
+        /* Profile Picture Styling */
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #00d2ff;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         header h1 {
@@ -90,11 +71,7 @@
             margin-bottom: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        body.dark-mode .card {
-            background: #3d405b;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
@@ -110,11 +87,6 @@
             padding-bottom: 8px;
         }
 
-        body.dark-mode .card h2 {
-            color: #00d2ff;
-            border-bottom: 2px solid #4a4e69;
-        }
-
         /* Info List styling */
         .info-list {
             list-style: none;
@@ -123,10 +95,6 @@
         .info-list li {
             padding: 10px 0;
             border-bottom: 1px solid #f9f9f9;
-        }
-
-        body.dark-mode .info-list li {
-            border-bottom: 1px solid #4a4e69;
         }
 
         /* Result Table Styling */
@@ -146,37 +114,30 @@
             border-bottom: 1px solid #e0e0e0;
         }
 
-        body.dark-mode .result-table td {
-            border-bottom: 1px solid #4a4e69;
-        }
-
         .result-table th {
             background-color: #1e3c72;
             color: white;
             font-weight: 600;
         }
 
-        body.dark-mode .result-table th {
-            background-color: #1e3c72;
-        }
-
         .result-table tbody tr:hover {
             background-color: #f9f9f9;
         }
 
-        body.dark-mode .result-table tbody tr:hover {
-            background-color: #4a4e69;
+        .mark-input {
+            width: 70px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            text-align: center;
         }
 
         .total-row {
             background-color: #f4f7f6;
             font-size: 1.1rem;
             color: #1e3c72;
-        }
-
-        body.dark-mode .total-row {
-            background-color: #4a4e69;
-            color: #00d2ff;
         }
 
         /* Project Grid & Buttons */
@@ -188,18 +149,9 @@
             margin-top: 15px;
         }
 
-        body.dark-mode .project-card {
-            background: #4a4e69;
-            border-left: 4px solid #00d2ff;
-        }
-
         .project-card h3 {
             margin-bottom: 10px;
             color: #333;
-        }
-
-        body.dark-mode .project-card h3 {
-            color: #fff;
         }
 
         .btn {
@@ -226,10 +178,6 @@
             color: #777;
             font-size: 0.9rem;
         }
-
-        body.dark-mode footer {
-            color: #9a8c98;
-        }
     </style>
 </head>
 <body>
@@ -237,8 +185,8 @@
     <!-- Header Section -->
     <header>
         <div class="container">
-            <!-- 🌙 Toggle Button inside Header -->
-            <button class="theme-toggle-btn" onclick="toggleTheme()">🌙 Grey Mode</button>
+            <!-- 📸 Profile Picture Element -->
+            <img src="profile.jpg" alt="Junaid's Picture" class="profile-img" onerror="this.src='https://placeholder.com'">
             
             <h1>Junaid <span class="highlight">Afzal</span></h1>
             <p>Intermediate Student & Aspiring Web Developer</p>
@@ -267,6 +215,7 @@
         <!-- Result Card Section -->
         <section class="card">
             <h2>📊 My Academic Results (11th Grade)</h2>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">* Aap niche boxes mein apne asli marks direct edit kar sakte hain, total khud badal jaye ga.</p>
             <div class="result-container">
                 <table class="result-table">
                     <thead>
@@ -280,37 +229,42 @@
                         <tr>
                             <td>English</td>
                             <td>100</td>
-                            <td>85</td>
+                            <td><input type="number" class="mark-input obtained" value="85" max="100" oninput="calculateTotal()"></td>
                         </tr>
                         <tr>
                             <td>Urdu</td>
                             <td>100</td>
-                            <td>78</td>
+                            <td><input type="number" class="mark-input obtained" value="78" max="100" oninput="calculateTotal()"></td>
                         </tr>
                         <tr>
                             <td>Islamic Studies</td>
                             <td>50</td>
-                            <td>45</td>
+                            <td><input type="number" class="mark-input obtained" value="45" max="50" oninput="calculateTotal()"></td>
                         </tr>
                         <tr>
                             <td>Physics</td>
                             <td>85</td>
-                            <td>72</td>
+                            <td><input type="number" class="mark-input obtained" value="72" max="85" oninput="calculateTotal()"></td>
                         </tr>
                         <tr>
                             <td>Chemistry</td>
                             <td>85</td>
-                            <td>68</td>
+                            <td><input type="number" class="mark-input obtained" value="68" max="85" oninput="calculateTotal()"></td>
                         </tr>
                         <tr>
                             <td>Mathematics</td>
                             <td>85</td>
-                            <td>75</td>
+                            <td><input type="number" class="mark-input obtained" value="75" max="85" oninput="calculateTotal()"></td>
                         </tr>
                         <tr class="total-row">
                             <td><strong>Grand Total</strong></td>
                             <td><strong>505</strong></td>
-                            <td><strong>423</strong></td>
+                            <td><strong id="grand-total">423</strong></td>
+                        </tr>
+                        <tr class="total-row" style="background-color: #eef2f5;">
+                            <td><strong>Percentage</strong></td>
+                            <td><strong>100%</strong></td>
+                            <td><strong id="percentage">83.76%</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -336,21 +290,19 @@
         <p>&copy; 2026 Junaid Afzal. Built with ♥ using HTML & CSS.</p>
     </footer>
 
-    <!-- ⚡ JavaScript for Theme Toggle Functional -->
+    <!-- ⚡ JavaScript for Automatic Calculation -->
     <script>
-        function toggleTheme() {
-            const body = document.body;
-            const btn = document.querySelector('.theme-toggle-btn');
-            
-            body.classList.toggle('dark-mode');
-            
-            if (body.classList.contains('dark-mode')) {
-                btn.innerHTML = "☀️ Light Mode";
-            } else {
-                btn.innerHTML = "🌙 Grey Mode";
-            }
-        }
-    </script>
+        function calculateTotal() {
+            const inputs = document.querySelectorAll('.mark-input.obtained');
+            let totalObtained = 0;
+            const totalMarks = 505;
 
-</body>
-</html>
+            inputs.forEach(input => {
+                let value = parseInt(input.value) || 0;
+                let max = parseInt(input.getAttribute('max'));
+                
+                // Agar user ghalti se ziada number likhay to control karne k liye
+                if (value > max) {
+                    value = max;
+                    input.value = max;
+                }
