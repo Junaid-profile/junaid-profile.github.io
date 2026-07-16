@@ -3,22 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Junaid's Portfolio & Result Card</title>
-    <!-- Google Fonts for Modern Look -->
+    <title>Junaid's Advance Portfolio & Result Card</title>
+    <!-- Google Fonts -->
     <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
-        /* Reset and Global Styles */
+        /* Variables for Light and Dark Theme */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --primary-gradient: linear-gradient(135deg, #1e3c72, #2a5298);
+            --accent-color: #00d2ff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f4f7f6;
+            --text-muted: #aaaaaa;
+            --border-color: #333333;
+            --primary-gradient: linear-gradient(135deg, #0f2027, #203a43);
+            --accent-color: #00d2ff;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background 0.3s, color 0.3s;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
         }
 
@@ -26,28 +47,71 @@
             width: 90%;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .theme-toggle:hover {
+            background: white;
+            color: #1e3c72;
         }
 
         /* Header Styling */
         header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: var(--primary-gradient);
             color: #fff;
-            padding: 50px 0;
+            padding: 60px 0;
             text-align: center;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
         }
 
-        /* Profile Picture Styling */
+        /* junaid.png.jpj */
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
         .profile-img {
             width: 130px;
             height: 130px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #00d2ff;
+            border: 4px solid var(--accent-color);
             margin-bottom: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .profile-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 130px; height: 130px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-bottom: 15px;
+        }
+        .profile-container:hover .profile-overlay {
+            opacity: 1;
         }
 
         header h1 {
@@ -56,7 +120,7 @@
         }
 
         .highlight {
-            color: #00d2ff;
+            color: var(--accent-color);
         }
 
         /* Main Content & Cards */
@@ -66,35 +130,31 @@
         }
 
         .card {
-            background: #fff;
+            background: var(--card-bg);
             padding: 30px;
             margin-bottom: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
         .card h2 {
-            color: #1e3c72;
+            color: #2a5298;
             margin-bottom: 15px;
             font-size: 1.5rem;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 8px;
         }
+        [data-theme="dark"] .card h2 {
+            color: var(--accent-color);
+        }
 
-        /* Info List styling */
         .info-list {
             list-style: none;
         }
 
         .info-list li {
             padding: 10px 0;
-            border-bottom: 1px solid #f9f9f9;
+            border-bottom: 1px solid var(--border-color);
         }
 
         /* Result Table Styling */
@@ -111,47 +171,68 @@
 
         .result-table th, .result-table td {
             padding: 12px 15px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .result-table th {
-            background-color: #1e3c72;
+            background: var(--primary-gradient);
             color: white;
             font-weight: 600;
         }
 
-        .result-table tbody tr:hover {
-            background-color: #f9f9f9;
-        }
-
         .mark-input {
-            width: 70px;
-            padding: 5px;
-            border: 1px solid #ccc;
+            width: 75px;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
             border-radius: 4px;
             font-family: 'Poppins', sans-serif;
             font-size: 0.95rem;
             text-align: center;
         }
 
+        /* Dynamic Badges for Status */
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .pass-row { background-color: rgba(46, 204, 113, 0.15); color: #27ae60; }
+        .fail-row { background-color: rgba(231, 76, 60, 0.15); color: #c0392b; }
+
         .total-row {
-            background-color: #f4f7f6;
+            background-color: var(--bg-color);
             font-size: 1.1rem;
-            color: #1e3c72;
+            font-weight: bold;
         }
 
-        /* Project Grid & Buttons */
+        /* Advanced Stats Widget */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-box {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .stat-box h4 { font-size: 0.9rem; color: var(--text-muted); }
+        .stat-box p { font-size: 1.5rem; font-weight: bold; color: #2a5298; }
+        [data-theme="dark"] .stat-box p { color: var(--accent-color); }
+
+        /* Project Cards */
         .project-card {
-            background: #f9f9f9;
+            background: var(--bg-color);
             padding: 20px;
             border-radius: 8px;
             border-left: 4px solid #1e3c72;
             margin-top: 15px;
-        }
-
-        .project-card h3 {
-            margin-bottom: 10px;
-            color: #333;
         }
 
         .btn {
@@ -163,19 +244,16 @@
             border-radius: 5px;
             margin-top: 15px;
             font-size: 0.9rem;
-            transition: background 0.3s;
         }
-
         .btn:hover {
-            background: #00d2ff;
+            background: var(--accent-color);
             color: #1e3c72;
         }
 
-        /* Footer */
         footer {
             text-align: center;
-            padding: 20px;
-            color: #777;
+            padding: 30px;
+            color: var(--text-muted);
             font-size: 0.9rem;
         }
     </style>
@@ -184,9 +262,16 @@
 
     <!-- Header Section -->
     <header>
+        <!-- Dark Mode Toggle Button -->
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+        
         <div class="container">
-            <!-- 📸 Profile Picture Element -->
-            <img src="profile.jpg" alt="Junaid's Picture" class="profile-img" onerror="this.src='https://placeholder.com'">
+            <!-- 📸 Clickable Profile Picture for Upload -->
+            <div class="profile-container" onclick="document.getElementById('imageUpload').click()">
+                <img src="profile.jpg" id="profileDisplay" alt="Junaid's Picture" class="profile-img" onerror="this.src='https://placehold.co'">
+                <div class="profile-overlay">Change Photo</div>
+            </div>
+            <input type="file" id="imageUpload" style="display:none" accept="image/*" onchange="loadPhoto(event)">
             
             <h1>Junaid <span class="highlight">Afzal</span></h1>
             <p>Intermediate Student & Aspiring Web Developer</p>
@@ -202,7 +287,7 @@
             <p>I am a student at <strong>Punjab College, Zafarwal</strong>. I love studying history, managing data, and learning how to build modern, responsive websites.</p>
         </section>
 
-        <!-- Education & Info Section -->
+        <!-- Education Info -->
         <section class="card">
             <h2>📚 Education & Info</h2>
             <ul class="info-list">
@@ -212,97 +297,26 @@
             </ul>
         </section>
 
-        <!-- Result Card Section -->
+        <!-- Dynamic Result Card -->
         <section class="card">
-            <h2>📊 My Academic Results (11th Grade)</h2>
-            <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">* Aap niche boxes mein apne asli marks direct edit kar sakte hain, total khud badal jaye ga.</p>
+            <h2>📊 Live Academic Report (11th Grade)</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+                * Boxes mein marks edit karein, Total, Percentage aur Grade auto-calculate ho jaye ga.
+            </p>
             <div class="result-container">
                 <table class="result-table">
                     <thead>
                         <tr>
                             <th>Subject</th>
-                            <th>Total Marks</th>
-                            <th>Obtained Marks</th>
+                            <th>Total</th>
+                            <th>Obtained</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="subject-row">
                             <td>English</td>
-                            <td>100</td>
-                            <td><input type="number" class="mark-input obtained" value="85" max="100" oninput="calculateTotal()"></td>
-                        </tr>
-                        <tr>
-                            <td>Urdu</td>
-                            <td>100</td>
-                            <td><input type="number" class="mark-input obtained" value="78" max="100" oninput="calculateTotal()"></td>
-                        </tr>
-                        <tr>
-                            <td>Islamic Studies</td>
-                            <td>50</td>
-                            <td><input type="number" class="mark-input obtained" value="45" max="50" oninput="calculateTotal()"></td>
-                        </tr>
-                        <tr>
-                            <td>Physics</td>
-                            <td>85</td>
-                            <td><input type="number" class="mark-input obtained" value="72" max="85" oninput="calculateTotal()"></td>
-                        </tr>
-                        <tr>
-                            <td>Chemistry</td>
-                            <td>85</td>
-                            <td><input type="number" class="mark-input obtained" value="68" max="85" oninput="calculateTotal()"></td>
-                        </tr>
-                        <tr>
-                            <td>Mathematics</td>
-                            <td>85</td>
-                            <td><input type="number" class="mark-input obtained" value="75" max="85" oninput="calculateTotal()"></td>
-                        </tr>
-                        <tr class="total-row">
-                            <td><strong>Grand Total</strong></td>
-                            <td><strong>505</strong></td>
-                            <td><strong id="grand-total">423</strong></td>
-                        </tr>
-                        <tr class="total-row" style="background-color: #eef2f5;">
-                            <td><strong>Percentage</strong></td>
-                            <td><strong>100%</strong></td>
-                            <td><strong id="percentage">83.76%</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                            <td class="max-mark">100</td>
+                            <td><input type="number" class="mark-input obtained" value="85" max="100" oninput="calculateReport()"></td>
 
-        <!-- My Projects Section -->
-        <section class="card">
-            <h2>💻 My Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>My First Profile Website</h3>
-                    <p>A clean personal portfolio built with HTML & CSS, hosted on GitHub Pages.</p>
-                    <a href="#" class="btn">View Live</a>
-                </div>
-            </div>
-        </section>
 
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Junaid Afzal. Built with ♥ using HTML & CSS.</p>
-    </footer>
-
-    <!-- ⚡ JavaScript for Automatic Calculation -->
-    <script>
-        function calculateTotal() {
-            const inputs = document.querySelectorAll('.mark-input.obtained');
-            let totalObtained = 0;
-            const totalMarks = 505;
-
-            inputs.forEach(input => {
-                let value = parseInt(input.value) || 0;
-                let max = parseInt(input.getAttribute('max'));
-                
-                // Agar user ghalti se ziada number likhay to control karne k liye
-                if (value > max) {
-                    value = max;
-                    input.value = max;
-                }
